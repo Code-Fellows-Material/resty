@@ -21,6 +21,9 @@
 - Install NPM packages:
   - `npm install`
 
+- Run:
+  - `npm start`
+
 ## Usage:
 
 - To be filled out as usage is built out.
