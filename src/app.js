@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './app.scss';
 
@@ -9,17 +9,26 @@ import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
 
-class App extends React.Component {
+function App() {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      requestParams: {},
-    };
+
+  let [data, setData] = useState(null);
+  let [requestParams, setRequestParams] = useState({});
+  const [loading, setLoading] = useState(false)
+
+  const dataSetter = (data) => {
+    setData(data)
   }
 
-  callApi = (requestParams) => {
+  const reqParamsSetter = (obj) => {
+    setRequestParams(obj);
+  }
+
+  const loadingSetter = (bool) => {
+    setLoading(bool)
+  }
+
+  const callApi = (reqParams) => {
     // mock output
     const data = {
       count: 2,
@@ -28,21 +37,27 @@ class App extends React.Component {
         {name: 'fake thing 2', url: 'http://fakethings.com/2'},
       ],
     };
-    this.setState({data, requestParams});
+    loadingSetter(true);
+
+    setTimeout( () => {
+      loadingSetter(false);
+    }, 2000);
+    
+    console.log(reqParams);
+    dataSetter(data);
+    reqParamsSetter(reqParams);
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
-        <div>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
-        <Results data={this.state.data} />
-        <Footer />
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <Header />
+      <div>Request Method: {requestParams.method ? requestParams.method.toUpperCase() : ''}</div>
+      <div>URL: {requestParams.url}</div>
+      <Form handleApiCall={callApi} />
+      {loading ?  "Loading...": <Results data={data} /> }
+      <Footer />
+    </React.Fragment>
+  );
 }
 
 export default App;
