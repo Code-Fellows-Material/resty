@@ -30,7 +30,7 @@
 
 ## Example Site:
 
-- To be filled out as site goes live.
+- Deployed at: https://kellen-linse.github.io/resty/
 
 ## UML:
 
