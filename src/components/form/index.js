@@ -46,7 +46,7 @@ function Form({handleApiCall}){
     <>
       <form data-testid="test-form" onSubmit={handleSubmit}>
         <label method={method} className="methods">
-          <span id="get"    className={clickCheck('get')}    onClick={() => methodSetter('get')}>GET</span>
+          <span id="get"  data-testid="get-form"  className={clickCheck('get')}    onClick={() => methodSetter('get')}>GET</span>
           <span id="post"  data-testid="post-form" className={clickCheck('post')}   onClick={() => methodSetter('post')}>POST</span>
           <span id="put"    className={clickCheck('put')}    onClick={() => methodSetter('put')}>PUT</span>
           <span id="delete" className={clickCheck('delete')} onClick={() => methodSetter('delete')}>DELETE</span>

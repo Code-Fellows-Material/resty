@@ -4,7 +4,7 @@ import Footer from './index.js';
 
 describe('testing the Header component', () => {
   it('Should render RESTy on initial load', () => {
-   let text = "2022"
+  let text = "2022"
 
     render(<Footer />);
     let heading = screen.getByText(text);

@@ -13,7 +13,6 @@ describe('Testing form component', () => {
     let submit = screen.getByTestId('button');
     let postButton = screen.getByTestId('post-form');
     fireEvent.click(postButton)
-    // let bodyForm = screen.getByTestId('body-form');
 
 
     // add values to input elements
@@ -21,10 +20,6 @@ describe('Testing form component', () => {
       url: {value: 'url'},
       body: {value: 'target'} 
     } })
-    // fireEvent.change(bodyForm, {target: {
-    //     value: "target",
-    // }});
-    
     
     // click on submit
     fireEvent.click(submit);
