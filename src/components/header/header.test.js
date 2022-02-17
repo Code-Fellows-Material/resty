@@ -4,7 +4,7 @@ import Header from './index.js';
 
 describe('testing the Header component', () => {
   it('Should render RESTy on initial load', () => {
-   let title = "RESTy"
+  let title = "RESTy"
 
     render(<Header />);
     let heading = screen.getByText(title);

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import './app.scss';
 
@@ -9,12 +10,37 @@ import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
 
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
 function App() {
 
+    let [isFirstMount, setIsFirstMount] = useState(true);
 
-  let [data, setData] = useState(null);
-  let [requestParams, setRequestParams] = useState({});
-  const [loading, setLoading] = useState(false)
+    let [data, setData] = useState(null);
+    let [requestParams, setRequestParams] = useState({});
+    const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (isFirstMount || isEmpty(requestParams)) {
+      console.log('No Request Called');
+      setIsFirstMount(false);
+    } else {
+      axios({
+        method: requestParams.method,
+        url: requestParams.url,
+        data: requestParams.data
+      }).then((res) => {
+        dataSetter(res.data);
+        reqParamsSetter(requestParams);
+        loadingSetter(false);
+      });
+    }
+  }, [requestParams])
+
+
+  
 
   const dataSetter = (data) => {
     setData(data)
@@ -28,24 +54,9 @@ function App() {
     setLoading(bool)
   }
 
-  const callApi = (reqParams) => {
-    // mock output
-    const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
-    };
+  const callApi = (requestData) => {
     loadingSetter(true);
-
-    setTimeout( () => {
-      loadingSetter(false);
-    }, 2000);
-    
-    console.log(reqParams);
-    dataSetter(data);
-    reqParamsSetter(reqParams);
+    setRequestParams(requestData);
   }
 
   return (
