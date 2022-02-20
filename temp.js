@@ -1,18 +1,7 @@
-import React, { useState, useEffect } from 'react';
 
 
-let [isFirstMount, setIsFirstMount] = useState(true);
-  
-const [method, setMethod] = useState('get');
-const [requestData, setRequestData] = useState({});
+    let [isFirstMount, setIsFirstMount] = useState(true);
 
-
-useEffect(() => {
-  
-  if (isFirstMount) {
-    console.log("first mount Form");
-    setIsFirstMount(false);
-  } else {    
-    handleApiCall(requestData);
-  }
-}, [requestData]);
+    let [data, setData] = useState(null);
+    let [requestParams, setRequestParams] = useState({});
+    const [loading, setLoading] = useState(false)

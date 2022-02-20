@@ -1,29 +1,21 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import './form.scss';
 
 // Defines reducer actions for consistency 
 const ACTIONS = {
-  CHANGE_MOUNT_STATE: 'mount_state',
   SET_METHOD: 'set_method',
-  SET_REQUEST_DATA: 'set_request_data'
 }
 
 // Sets initial State
 const initialState = {
-  isFirstMount: true,
   method: 'get',
-  requestData: {}
 }
 
 //reducer function for useReducer hook
 function reducer(state, action){
   switch (action.type) {
-    case ACTIONS.CHANGE_MOUNT_STATE:
-      return {...state, isFirstMount: action.payload.mountState};
     case ACTIONS.SET_METHOD:
       return {...state, method: action.payload.method};
-    case ACTIONS.SET_REQUEST_DATA:
-      return {...state, requestData: action.payload.requestData};
     default:
       return state;
   }
@@ -31,31 +23,22 @@ function reducer(state, action){
 
 // Form Component 
 function Form({handleApiCall}){
- 
+
   //State
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  //Monitor the state variable, run cb if changes occur
-  useEffect(() => {
-    if (state.isFirstMount) {
-      dispatch({type: ACTIONS.CHANGE_MOUNT_STATE, payload: {mountState: false}});
-    } else {    
-      handleApiCall(state.requestData);
-    }
-  }, [state]);
-
-  //handle submit of form - set state.requestData
+  //handle submit of form 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch({ 
-      type: ACTIONS.SET_REQUEST_DATA, 
-      payload: { 
-        requestData: {
-          method: state.method,
-          url: e.target.url.value ? e.target.url.value : '',
-          data: e.target.body ? e.target.body.value : {},
-        }
-    }});  
+    if (!e.target.url.value) return console.log('URL cannot be empty')
+
+    let requestData = {
+      method: state.method,
+      url: e.target.url.value,
+      data: state.method === 'put' || state.method === 'post' ?  e.target.body ? e.target.body.value : {} : {},
+    }
+      
+    handleApiCall(requestData);
   }
   
   //set state.method
