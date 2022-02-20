@@ -1,18 +1,21 @@
 import React, { useReducer, useEffect } from 'react';
 import './form.scss';
 
+// Defines reducer actions for consistency 
 const ACTIONS = {
   CHANGE_MOUNT_STATE: 'mount_state',
   SET_METHOD: 'set_method',
   SET_REQUEST_DATA: 'set_request_data'
 }
 
+// Sets initial State
 const initialState = {
   isFirstMount: true,
   method: 'get',
   requestData: {}
 }
 
+//reducer function for useReducer hook
 function reducer(state, action){
   switch (action.type) {
     case ACTIONS.CHANGE_MOUNT_STATE:
@@ -26,12 +29,13 @@ function reducer(state, action){
   }
 }
 
+// Form Component 
 function Form({handleApiCall}){
  
   //State
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  //Use fee
+  //Monitor the state variable, run cb if changes occur
   useEffect(() => {
     if (state.isFirstMount) {
       dispatch({type: ACTIONS.CHANGE_MOUNT_STATE, payload: {mountState: false}});
@@ -40,7 +44,7 @@ function Form({handleApiCall}){
     }
   }, [state]);
 
-  
+  //handle submit of form - set state.requestData
   const handleSubmit = e => {
     e.preventDefault();
     dispatch({ 
@@ -54,14 +58,16 @@ function Form({handleApiCall}){
     }});  
   }
   
+  //set state.method
   const methodSetter = (method) => {
     dispatch({ 
       type: ACTIONS.SET_METHOD, 
       payload: { 
         method: method
-      }});
-    }
+    }});
+  }
     
+  //check method, returning name of class for styling purposes
   const clickCheck = (spanMethod) => {
     return state.method === spanMethod ? "buttonTrue": "buttonFalse"
   }
