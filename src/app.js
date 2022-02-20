@@ -114,14 +114,20 @@ function App() {
     historySetter(newHistory);
   }
 
+  function showHistory(id){
+    let historyToShow = state.history.filter( history => history.id === id);
+    reqParamsSetter(historyToShow[0].request);
+    resDataSetter(historyToShow[0].response);
+  }
+
   return (
     <React.Fragment>
       <Header />
       <Form handleApiCall={callApi} />
       <div>URL: {state.requestParams.url}</div>
       <div>Request Method: {state.requestParams.method ? state.requestParams.method.toUpperCase() : ''}</div>
-      <History searchHistory={state.history} deleteHistory={deleteHistory}/>
-      {state.isLoading ?  "Loading...": <Results data={state.resData} /> }
+      <History searchHistory={state.history} deleteHistory={deleteHistory} showHistory={showHistory}/>
+      {state.isLoading ?  "Loading...": <Results data={state.resData}/> }
       <Footer />
     </React.Fragment>
   );
