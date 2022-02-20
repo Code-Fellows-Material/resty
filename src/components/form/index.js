@@ -1,51 +1,76 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import './form.scss';
 
+const ACTIONS = {
+  CHANGE_MOUNT_STATE: 'mount_state',
+  SET_METHOD: 'set_method',
+  SET_REQUEST_DATA: 'set_request_data'
+}
 
+const initialState = {
+  isFirstMount: true,
+  method: 'get',
+  requestData: {}
+}
+
+function reducer(state, action){
+  switch (action.type) {
+    case ACTIONS.CHANGE_MOUNT_STATE:
+      return {...state, isFirstMount: action.payload.mountState};
+    case ACTIONS.SET_METHOD:
+      return {...state, method: action.payload.method};
+    case ACTIONS.SET_REQUEST_DATA:
+      return {...state, requestData: action.payload.requestData};
+    default:
+      return state;
+  }
+}
 
 function Form({handleApiCall}){
+ 
+  //State
+  const [state, dispatch] = useReducer(reducer, initialState)
 
-  let [isFirstMount, setIsFirstMount] = useState(true);
-  
-  const [method, setMethod] = useState('get');
-  const [requestData, setRequestData] = useState({});
-
-  const methodSetter = (method) => {
-    setMethod(method);
-  }
-
+  //Use fee
   useEffect(() => {
-
-    if (isFirstMount) {
-      console.log("first mount Form");
-      setIsFirstMount(false);
+    if (state.isFirstMount) {
+      dispatch({type: ACTIONS.CHANGE_MOUNT_STATE, payload: {mountState: false}});
     } else {    
-      handleApiCall(requestData);
+      handleApiCall(state.requestData);
     }
-  }, [requestData]);
+  }, [state]);
 
-
+  
   const handleSubmit = e => {
     e.preventDefault();
-
-    setRequestData({
-      method: method,
-      url: e.target.url.value ? e.target.url.value : '',
-      data: e.target.body ? e.target.body.value : {},
-    });
+    dispatch({ 
+      type: ACTIONS.SET_REQUEST_DATA, 
+      payload: { 
+        requestData: {
+          method: state.method,
+          url: e.target.url.value ? e.target.url.value : '',
+          data: e.target.body ? e.target.body.value : {},
+        }
+    }});  
   }
-
-
-
+  
+  const methodSetter = (method) => {
+    dispatch({ 
+      type: ACTIONS.SET_METHOD, 
+      payload: { 
+        method: method
+      }});
+    }
+    
   const clickCheck = (spanMethod) => {
-    return method === spanMethod ? "buttonTrue": "buttonFalse"
+    return state.method === spanMethod ? "buttonTrue": "buttonFalse"
   }
 
 
   return (
     <>
       <form data-testid="test-form" onSubmit={handleSubmit}>
-        <label method={method} className="methods">
+        <label method={state.method} className="methods">
           <span id="get"  data-testid="get-form"  className={clickCheck('get')}    onClick={() => methodSetter('get')}>GET</span>
           <span id="post"  data-testid="post-form" className={clickCheck('post')}   onClick={() => methodSetter('post')}>POST</span>
           <span id="put"    className={clickCheck('put')}    onClick={() => methodSetter('put')}>PUT</span>
@@ -56,7 +81,7 @@ function Form({handleApiCall}){
           <input  name='url' type='text' />
           <button data-testid="button" type="submit">GO!</button>
         </label>
-        {(method === 'post' || method === 'put') && <label>
+        {(state.method === 'post' || state.method === 'put') && <label>
             <textarea name="body"></textarea>
           </label>}
       </form>
