@@ -7,21 +7,33 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
+import History from './components/history';
 
 //=================================================================================
+
+class searchHistory{
+  constructor(req, res){
+    this.request = req;
+    this.response = res;
+    this.date = new Date();
+    this.id = Date.now();
+  }
+}
 
 // Set actions
 const ACTIONS = {
   SET_LOADING_STATE: 'loading',
   SET_REQUEST_PARAMS: 'request',
-  SET_RESPONSE_DATA: 'response'
+  SET_RESPONSE_DATA: 'response',
+  SET_HISTORY: 'history'
 }
 
 //set initial state
 const initialState = {
   isLoading: false,
   requestParams: {},
-  resData: {}
+  resData: {},
+  history: []
 }
 
 //=================================================================================
@@ -39,7 +51,13 @@ function reducer(state, action){
 
     case ACTIONS.SET_RESPONSE_DATA:
       return {...state, resData: action.payload.resData}
-  
+
+    case ACTIONS.SET_HISTORY:
+      return {...state, history: action.payload.history}
+
+    case ACTIONS.ADD_HISTORY:
+      return {...state, history: [...state.history, action.payload.history]}
+
     default:
       return state;
   }
@@ -63,12 +81,22 @@ function App() {
     dispatch({type: ACTIONS.SET_LOADING_STATE, payload: {loading: bool}})
   }
 
+  const historyAdder = (req, res) => {
+    dispatch({type: ACTIONS.ADD_HISTORY, payload: {history: new searchHistory(req, res)}})
+  }
+  
+  const historySetter = (history) => {
+    dispatch({type: ACTIONS.SET_HISTORY, payload: {history: history}})
+  }
+
+
   function makeRequest(reqParams){
     axios({
       method: reqParams.method,
       url: reqParams.url,
       data: reqParams.data,
     }).then((res) => {
+      historyAdder(reqParams, res.data);
       resDataSetter(res.data);
       loadingSetter(false)
     });
@@ -80,12 +108,19 @@ function App() {
     makeRequest(requestData);
   }
 
+
+  function deleteHistory(id){
+    let newHistory = state.history.filter( history => history.id !== id);
+    historySetter(newHistory);
+  }
+
   return (
     <React.Fragment>
       <Header />
-      <div>Request Method: {state.requestParams.method ? state.requestParams.method.toUpperCase() : ''}</div>
-      <div>URL: {state.requestParams.url}</div>
       <Form handleApiCall={callApi} />
+      <div>URL: {state.requestParams.url}</div>
+      <div>Request Method: {state.requestParams.method ? state.requestParams.method.toUpperCase() : ''}</div>
+      <History searchHistory={state.history} deleteHistory={deleteHistory}/>
       {state.isLoading ?  "Loading...": <Results data={state.resData} /> }
       <Footer />
     </React.Fragment>

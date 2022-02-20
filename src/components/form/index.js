@@ -1,6 +1,9 @@
 import React, { useReducer } from 'react';
 import './form.scss';
 
+//=================================================================================
+
+
 // Defines reducer actions for consistency 
 const ACTIONS = {
   SET_METHOD: 'set_method',
@@ -11,6 +14,9 @@ const initialState = {
   method: 'get',
 }
 
+//=================================================================================
+
+
 //reducer function for useReducer hook
 function reducer(state, action){
   switch (action.type) {
@@ -20,6 +26,9 @@ function reducer(state, action){
       return state;
   }
 }
+
+//=================================================================================
+
 
 // Form Component 
 function Form({handleApiCall}){
