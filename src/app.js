@@ -26,11 +26,6 @@ const initialState = {
 
 //=================================================================================
 
-//Checks if an object is empty
-function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
-
 //reducer function for useReducer hook
 function reducer(state, action){
   console.log('s', state, 'a', action);
@@ -80,8 +75,6 @@ function App() {
   }
 
   const callApi = (requestData) => {
-    if(isEmpty(requestData)) return console.log('Empty requestData')
-
     loadingSetter(true);
     reqParamsSetter(requestData);
     makeRequest(requestData);
