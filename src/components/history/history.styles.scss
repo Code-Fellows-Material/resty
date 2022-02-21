@@ -36,10 +36,15 @@
       flex-direction: column;
       justify-content: space-around;
       font-size: 1.1em;
+      text-overflow: ellipsis;
+      margin: 3px;
     }
 
     #url{
+      overflow-x: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 154px;
     }
 
     #method{

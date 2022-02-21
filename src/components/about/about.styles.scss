@@ -5,6 +5,7 @@
   border: 2px solid black;
   border-radius: 8px;
   background-color: rgb(107, 107, 107);
+  margin-bottom: 20px;
 }
 #about-container-inner {
   margin: 10px 20px;
@@ -13,4 +14,12 @@
   border: 2px solid black;
   border-radius: 8px;
   background-color: rgb(255, 255, 255);
+
+  #author{
+    margin-bottom: 20px;
+  }
+}
+#about-container-info {
+  padding-left: 20%;
+  text-align: left;
 }

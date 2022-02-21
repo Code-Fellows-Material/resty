@@ -84,7 +84,7 @@ function Form({handleApiCall}){
         </label>
         </div>
         {(state.method === 'post' || state.method === 'put') && <label>
-            <textarea name="body"  rows="30" cols="50" placeholder="place your request body here..."></textarea>
+            <textarea name="body"  rows="10" cols="50" placeholder="place your request body here..."></textarea>
           </label>}
       </form>
     </div>
