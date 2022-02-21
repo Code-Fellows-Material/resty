@@ -1,10 +1,12 @@
 import React from 'react';
 
+import './header.styles.scss'
+
 function Header(){
 
     return (
       <header>
-        <h1>RESTy</h1>
+        <p>RESTy</p>
       </header>
     );
 

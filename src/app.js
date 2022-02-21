@@ -11,6 +11,7 @@ import History from './components/history';
 
 //=================================================================================
 
+//class constructor for individual item in search history
 class searchHistory{
   constructor(req, res){
     this.request = req;
@@ -20,7 +21,7 @@ class searchHistory{
   }
 }
 
-// Set actions
+// Set actions for useReducer hook
 const ACTIONS = {
   SET_LOADING_STATE: 'loading',
   SET_REQUEST_PARAMS: 'request',
@@ -123,11 +124,17 @@ function App() {
   return (
     <React.Fragment>
       <Header />
-      <Form handleApiCall={callApi} />
-      <div>URL: {state.requestParams.url}</div>
-      <div>Request Method: {state.requestParams.method ? state.requestParams.method.toUpperCase() : ''}</div>
-      <History searchHistory={state.history} deleteHistory={deleteHistory} showHistory={showHistory}/>
-      {state.isLoading ?  "Loading...": <Results data={state.resData}/> }
+      <div className="flex-grid-thirds">
+        <div className="col" id="history-col">
+          <History searchHistory={state.history} deleteHistory={deleteHistory} showHistory={showHistory}/>
+        </div>
+        <div className="col" id="form-col">
+          <Form handleApiCall={callApi} />
+        </div>
+        <div className="col" id='results-col'>
+          {state.isLoading ?  "Loading...": <Results data={state.resData} url={state.requestParams.url} method={state.requestParams?.method?.toUpperCase()}/> }
+        </div>
+      </div>
       <Footer />
     </React.Fragment>
   );

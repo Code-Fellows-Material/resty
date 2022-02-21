@@ -1,0 +1,57 @@
+
+#title{
+  display: flex;
+  justify-content: center;
+
+  p{
+    margin: 40px 0;
+    font-size: 2em;
+  }
+  
+}
+
+#history-list{
+  border: 2px solid black;
+  margin: 0 20px;
+  flex-grow: 1;
+
+  li{
+
+    margin: 20px 20px;
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+    padding-bottom: 3px;
+
+
+      &:hover, &.active {
+        color: rgb(0, 117, 212);
+        border-bottom: 2px solid black;
+        font-weight: bold;
+      }
+
+    span{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      font-size: 1.1em;
+    }
+
+    #url{
+      text-overflow: ellipsis;
+    }
+
+    #method{
+      border: 2px solid black;
+      padding: 8px;border-radius: 5px;
+      background-color: white;
+    }
+
+    button{
+      border: 2px solid black;
+      padding: 8px;border-radius: 5px;
+      font-weight: bold;
+      background-color: rgba(211, 140, 140, 0.479);
+    }
+  }
+}

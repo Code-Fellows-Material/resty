@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import './form.scss';
+import './form.styles.scss';
 
 //=================================================================================
 
@@ -67,6 +67,8 @@ function Form({handleApiCall}){
 
   return (
     <>
+    <div id='title'><p>Input: </p></div>
+    <div id='form-container'>
       <form data-testid="test-form" onSubmit={handleSubmit}>
         <label method={state.method} className="methods">
           <span id="get"  data-testid="get-form"  className={clickCheck('get')}    onClick={() => methodSetter('get')}>GET</span>
@@ -74,15 +76,18 @@ function Form({handleApiCall}){
           <span id="put"    className={clickCheck('put')}    onClick={() => methodSetter('put')}>PUT</span>
           <span id="delete" className={clickCheck('delete')} onClick={() => methodSetter('delete')}>DELETE</span>
         </label>
-        <label >
+        <div id='url'>
+        <label>
           <span>URL: </span>
           <input  name='url' type='text' />
-          <button data-testid="button" type="submit">GO!</button>
+          <button data-testid="button" type="submit">&#9654;</button>
         </label>
+        </div>
         {(state.method === 'post' || state.method === 'put') && <label>
-            <textarea name="body"></textarea>
+            <textarea name="body"  rows="30" cols="50" placeholder="place your request body here..."></textarea>
           </label>}
       </form>
+    </div>
     </>
   );
 }
