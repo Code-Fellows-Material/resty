@@ -1,66 +1,94 @@
-import React, { useState, useEffect } from 'react';
-import './form.scss';
+import React, { useReducer } from 'react';
+import './form.styles.scss';
+
+//=================================================================================
 
 
+// Defines reducer actions for consistency 
+const ACTIONS = {
+  SET_METHOD: 'set_method',
+}
 
+// Sets initial State
+const initialState = {
+  method: 'get',
+}
+
+//=================================================================================
+
+
+//reducer function for useReducer hook
+function reducer(state, action){
+  switch (action.type) {
+    case ACTIONS.SET_METHOD:
+      return {...state, method: action.payload.method};
+    default:
+      return state;
+  }
+}
+
+//=================================================================================
+
+
+// Form Component 
 function Form({handleApiCall}){
 
-  let [isFirstMount, setIsFirstMount] = useState(true);
-  
-  const [method, setMethod] = useState('get');
-  const [requestData, setRequestData] = useState({});
+  //State
+  const [state, dispatch] = useReducer(reducer, initialState)
 
-  const methodSetter = (method) => {
-    setMethod(method);
-  }
-
-  useEffect(() => {
-
-    if (isFirstMount) {
-      console.log("first mount Form");
-      setIsFirstMount(false);
-    } else {    
-      handleApiCall(requestData);
-    }
-  }, [requestData]);
-
-
+  //handle submit of form 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!e.target.url.value) return console.log('URL cannot be empty')
 
-    setRequestData({
-      method: method,
-      url: e.target.url.value ? e.target.url.value : '',
-      data: e.target.body ? e.target.body.value : {},
-    });
+    let requestData = {
+      method: state.method,
+      url: e.target.url.value,
+      data: state.method === 'put' || state.method === 'post' ?  e.target.body ? e.target.body.value : {} : {},
+    }
+      
+    handleApiCall(requestData);
   }
-
-
-
+  
+  //set state.method
+  const methodSetter = (method) => {
+    dispatch({ 
+      type: ACTIONS.SET_METHOD, 
+      payload: { 
+        method: method
+    }});
+  }
+    
+  //check method, returning name of class for styling purposes
   const clickCheck = (spanMethod) => {
-    return method === spanMethod ? "buttonTrue": "buttonFalse"
+    return state.method === spanMethod ? "buttonTrue": "buttonFalse"
   }
 
 
   return (
-    <>
+    <div>
+    <div id='title'><p>Input: </p></div>
+    <div id='form-container'>
       <form data-testid="test-form" onSubmit={handleSubmit}>
-        <label method={method} className="methods">
+        <label method={state.method} className="methods">
           <span id="get"  data-testid="get-form"  className={clickCheck('get')}    onClick={() => methodSetter('get')}>GET</span>
           <span id="post"  data-testid="post-form" className={clickCheck('post')}   onClick={() => methodSetter('post')}>POST</span>
           <span id="put"    className={clickCheck('put')}    onClick={() => methodSetter('put')}>PUT</span>
           <span id="delete" className={clickCheck('delete')} onClick={() => methodSetter('delete')}>DELETE</span>
         </label>
-        <label >
+        <div id='url'>
+        <label>
           <span>URL: </span>
           <input  name='url' type='text' />
-          <button data-testid="button" type="submit">GO!</button>
+          <button data-testid="button" type="submit">&#9654;</button>
         </label>
-        {(method === 'post' || method === 'put') && <label>
-            <textarea name="body"></textarea>
+        </div>
+        {(state.method === 'post' || state.method === 'put') && <label>
+            <textarea name="body"  rows="10" cols="50" placeholder="place your request body here..."></textarea>
           </label>}
       </form>
-    </>
+    </div>
+    </div>
   );
 }
 

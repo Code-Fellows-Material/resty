@@ -1,5 +1,41 @@
 
-.object-key-val{
-  padding-top: 40px;
-  font-size: 1.1em;
+#result-container{
+  flex-grow: 1;
+  flex-direction: column;
+  display: flex;
+  overflow: auto;
+}
+
+#results{
+  padding: 0 20px;
+  padding-top: 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.react-json-view{
+  padding: 30px 8px;
+  margin: 0 10px;
+  flex-grow: 1;
+  font-size: 1.2em;
+  white-space: pre-line;
+}
+
+#info{
+  margin: 0 30px;
+  border: 2px solid black;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: white;
+
+  div{
+    margin-top: 10px;
+    font-weight: 500;
+    span{
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
 }

@@ -3,10 +3,18 @@ import ReactJson from 'react-json-view';
 
 import './results.scss';
 
-function Results(props){
+function Results({url, method, data}){
     return (
-      <section>
-        <pre style={{ "height": "400px", "display": "flex", "justifyContent": "space-around"}} >{props.data ? <ReactJson style={{"width": "35%", "display": "flex", "justifyContent": "space-around"}} name="data" src={props.data} theme="monokai" /> : null}</pre>
+      <section id="result-container">
+        <div id='title'><p>Results: </p></div>
+        <div id="info">
+          <div><span>Request Method:</span> {method}</div> 
+          <div><span>URL:</span> {url}</div>
+        </div>
+
+        <pre id='results'>
+          {data ? <ReactJson name="data" src={data} theme="monokai" collapseStringsAfterLength={30} /> : null}
+        </pre>
       </section>
     );
 }

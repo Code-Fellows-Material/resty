@@ -2,7 +2,7 @@
 
 ## Overview:
 
-> RESTy is a browser based API testing tool which allows a user to easily interact with APIs in a familiar interface.
+> RESTy is a browser based API testing tool which allows a user to easily interact with APIs in a familiar interface. Build as a project for Code Fellows Javascript 401 to demonstrate React hooks, functional components, and deploying React apps with Github Pages.
 
 ## Author:
 
@@ -12,6 +12,11 @@
 
 - React.js
 - Sass
+- React JSON view
+- React Spinner 
+- Axios 
+- Jest
+- MSW
 
 ## Getting Started:
 
@@ -26,13 +31,16 @@
 
 ## Usage:
 
-- To be filled out as usage is built out.
+- Choose the method of request you would like.
+- Enter URL for the API you wish to test
+- If you choose `post` or `put`, enter the data from the body of your request in the text area that appears.
+- Press the green button to send your request.
+- Click on an item in your history to see past results.
 
 ## Example Site:
 
-- Deployed at: https://kellen-linse.github.io/resty/
+- [https://kellen-linse.github.io/resty/](https://kellen-linse.github.io/resty/)
 
-## UML:
+## Wire Frame:
 
-- To be built out over the week.
-- ![UML](UML_1.jpg)
+![Wireframe](wire-frame.jpg)
