@@ -6,7 +6,8 @@ function Header(){
 
     return (
       <header>
-        <p>RESTy</p>
+        <p id='title'>RESTy</p>
+        <p id='sub-title'>A browser based API testing tool</p>
       </header>
     );
 

@@ -66,7 +66,7 @@ function Form({handleApiCall}){
 
 
   return (
-    <>
+    <div>
     <div id='title'><p>Input: </p></div>
     <div id='form-container'>
       <form data-testid="test-form" onSubmit={handleSubmit}>
@@ -88,7 +88,7 @@ function Form({handleApiCall}){
           </label>}
       </form>
     </div>
-    </>
+    </div>
   );
 }
 

@@ -1,6 +1,9 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
 
+import { css } from "@emotion/react";
+import RingLoader from "react-spinners/RingLoader";
+
 import './app.scss';
 
 import Header from './components/header';
@@ -8,6 +11,14 @@ import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
 import History from './components/history';
+import About from './components/about';
+
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 //=================================================================================
 
@@ -130,9 +141,10 @@ function App() {
         </div>
         <div className="col" id="form-col">
           <Form handleApiCall={callApi} />
+          <About />
         </div>
         <div className="col" id='results-col'>
-          {state.isLoading ?  "Loading...": <Results data={state.resData} url={state.requestParams.url} method={state.requestParams?.method?.toUpperCase()}/> }
+          {state.isLoading ?  <RingLoader loading={state.isLoading} css={override} size={150} /> : <Results data={state.resData} url={state.requestParams.url} method={state.requestParams?.method?.toUpperCase()}/> }
         </div>
       </div>
       <Footer />

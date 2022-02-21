@@ -11,7 +11,8 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; //==========
+  justify-content: center;
+  overflow: auto;
 }
 
 .react-json-view{
@@ -20,6 +21,7 @@
   flex-grow: 1;
   font-size: 1.2em;
   white-space: pre-line;
+  overflow: auto;
 }
 
 #info{
@@ -28,6 +30,7 @@
   padding: 8px;
   border-radius: 5px;
   background-color: white;
+  overflow: auto;
   div{
     margin-top: 10px;
     font-weight: 500;
